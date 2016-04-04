@@ -2,7 +2,7 @@ body {
 	background-image: url(images/valley.jpg);
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
-	font-family: 'Julius Sans One', sans-serif;
+	/*font-family: 'Julius Sans One', sans-serif;*/
 	overflow-x: hidden;
 	background-attachment: fixed;
 	margin: 0 auto;
@@ -27,7 +27,7 @@ body {
 h1 {
 display: block;
 border-bottom-color: grey;
-font-family: 'Julius Sans One', sans-serif;
+/*font-family: 'Julius Sans One', sans-serif;*/
 font-size: 2.5rem;
 padding-top: 28px;
 padding-left: 1rem;
