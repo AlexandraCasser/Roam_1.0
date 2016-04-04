@@ -1,10 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-// var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/ancient-brook-75923';
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/roamwildlife';
 var mongoose = require('mongoose');
 
-// mongoose.connect(mongoUri);
+mongoose.connect(mongoUri);
 
 app.use(bodyParser.json());
 
