@@ -1,0 +1,24 @@
+<div id="new-sighting-container" ng-if="SightingsListController.editSighting">
+
+  <form ng-controller="SightingsListController as editCtrl" ng-submit="editCtrl.edit()"><br>
+    <select ng-model="editCtrl.spec">
+      <option ng-repeat="specie in editCtrl.species">   
+        {{specie}}
+      </option>
+      </select>
+    <div id="numberContainer">
+      <input ng-model="editCtrl.number" type="number" placeholder="Number"/>
+    </div><br>
+    <div id="timeContainer">
+      <input ng-model="editCtrl.daytime" type="text" placeholder="Time of day"/><br/>
+      </div><br>
+    <div id="latContainer">
+      <input ng-model="editCtrl.lat" type="text" placeholder="Latitude"/><br/>
+      </div><br>
+    <div id="longContainer">
+      <input ng-model="editCtrl.lng" type="text" placeholder="Longitude"/><br/>
+    </div>
+
+    <button id="edit-record-submit" type="submit">SUBMIT</button>
+  </form>
+</div>

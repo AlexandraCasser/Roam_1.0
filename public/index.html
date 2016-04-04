@@ -1,0 +1,226 @@
+<html ng-app='roam'>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+    <script src='js/app.js'></script>
+    <script src='js/locations.js'></script>
+    <link rel='stylesheet' href='/css/styles.css'>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChLeGpYBYyiOOn-poiMhi2u7i_-KtG5VI&callback=initMap"></script> -->
+    <title>Roam</title>
+  </head>
+  <body>
+    
+    <h1>Roam</h1>
+      <p id="line"></p>
+        <div id="wind"></div>
+
+          <div id="map">
+<!--          <script>
+              function initMap() {
+                var myLatLng = {lat: -25.363, lng: 131.044};
+                var foxSighting = {lat: 37.937090, lng: -78.945007};
+                var wolfSighting = {lat: 38.233259, lng: -78.725281};
+                var hawkSighting = {lat: 37.817853, lng: -79.192200};
+                var deerSighting = {lat: 38.183621, lng: -79.346008};
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 8,
+                  center: foxSighting
+                });
+
+                var marker = new google.maps.Marker({
+                  position: myLatLng,
+                  map: map,
+                  title: 'Hello World!'
+                });
+
+                var foxMarker = new google.maps.Marker({
+                  position: foxSighting,
+                  map: map,
+                  icon: '/css/icons/animal.png'
+                });
+
+                var wolfMarker = new google.maps.Marker({
+                  position: wolfSighting,
+                  map: map,
+                  icon: '/css/icons/silhouette.png'
+                });
+
+                var hawkMarker = new google.maps.Marker({
+                  position: hawkSighting,
+                  map: map,
+                  icon: '/css/icons/animal-3.png'
+                });
+
+                var deerMarker = new google.maps.Marker({
+                  position: deerSighting,
+                  map: map,
+                  icon: '/css/icons/animal-2.png'
+                });
+              }
+
+              function placeMarkerAndPanTo(latLng, map) {
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map
+                });
+                map.panTo(latLng);
+              }
+
+
+            </script>
+              <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChLeGpYBYyiOOn-poiMhi2u7i_-KtG5VI&callback=initMap">
+                </script> -->
+
+          </div><br>
+
+          <p>Recent sightings</p>
+            <br>
+          <!-- <div ng-controller="SightingsListController as sightingsCtrl"> -->
+            <!-- <h1 ng-if="sightingsCtrl.editSighting" >SHOW UP</h1> -->
+            <!-- <img ng-src="/css/images/edit.png" ng-click="sightingsCtrl.editMe()"> -->
+            <!-- !!{{sightingsCtrl.editSighting}}!! -->
+          <!-- </div> -->
+
+        <ul ng-controller="SightingsListController as sightingsCtrl">
+
+      <!-- <h1 ng-if"sightingsCtrl.editSighting">SHOW UP</h1> -->
+
+      <div id="edit-sighting-container" ng-if="sightingsCtrl.editSighting">
+              <form ng-submit="sightingsCtrl.edit()"><br>
+              <p>Edit this Sighting</p>
+                <select ng-model="sightingsCtrl.editedSighting.spec">
+                  <option ng-repeat="specie in sightingsCtrl.species">   
+                    {{specie}}
+                  </option>
+                  </select>
+                <div id="numberContainer">
+                  <input ng-model="sightingsCtrl.editedSighting.number" type="number" placeholder="Number"/>
+                </div><br>
+                <div id="timeContainer">
+                  <input ng-model="sightingsCtrl.editedSighting.daytime" type="text" placeholder="Time of day"/><br/>
+                  </div><br>
+                <div id="latContainer">
+                  <input ng-model="sightingsCtrl.editedSighting.lat" type="text" placeholder="Latitude"/><br/>
+                  </div><br>
+                <div id="longContainer">
+                  <input ng-model="sightingsCtrl.editedSighting.lng" type="text" placeholder="Longitude"/><br/>
+                </div>
+                <button id="edit-record-submit" type="submit">SUBMIT</button>
+              </form>
+
+      </div>
+
+
+        <li ng-repeat="sighting in sightingsCtrl.sightings track by $index">
+          <img src="/css/images/compass.png"><br>
+            Species: {{sighting.species}} <br>
+            Number: {{sighting.number}} <br>
+            Time: {{sighting.daytime}} <br>
+          <img ng-src="/css/images/delete.png" ng-click="sightingsCtrl.delete(sighting, $index)">
+          <img ng-src="/css/images/edit.png" ng-click="sightingsCtrl.editMe(sighting)">
+        </li>
+      </ul>
+
+
+
+
+
+
+
+
+
+            <div id="new-sighting-container">
+              <p id="new-sighting-title">Add New Sighting</p>
+                <form ng-controller="CreateSightingController as createCtrl" ng-submit="createCtrl.create()"><br>
+                  <select ng-model="createCtrl.spec">
+                    <option ng-repeat="specie in createCtrl.species track by $index">   
+                      {{specie}}
+                    </option><br>
+                  </select><br>
+    
+                  <div id="numberContainer">
+                    <input ng-model="createCtrl.number" type="number" placeholder="Number"/>
+                  </div><br>
+
+                  <div id="timeContainer">
+                    <input ng-model="createCtrl.daytime" type="text" placeholder="Time of day"/><br/>
+                    </div><br>
+
+                  <div id="latContainer">
+                    <input ng-model="createCtrl.lat" type="text" placeholder="Latitude"/><br/>
+                    </div><br>
+
+                  <div id="longContainer">
+                    <input ng-model="createCtrl.lng" type="text" placeholder="Longitude"/><br/>
+                  </div><br>
+
+                  <button id="new-record-submit" type="submit">SUBMIT</button>
+                </form>
+            </div>
+             <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChLeGpYBYyiOOn-poiMhi2u7i_-KtG5VI&callback=initialize"></script>  -->
+  </body>
+</html>
+
+
+
+<!-- ============================================================================ -->
+                          <!-- Old Code -->
+<!-- ============================================================================ -->
+
+<!--          <div id="speciesContainer">
+              <input ng-model="createCtrl.species" type="test" placeholder="Species"/><br/>
+              </div> -->
+
+<!--             <ul ng-controller="CreateSightingController as createCtrl">
+              </li>
+            </ul> -->
+
+
+                    <!-- <select>                        
+                    <option value="bald eagle">Bald Eagle</option>
+                      <option value="black bear">Black Bear</option>
+                      <option value="coyote">Coyote</option>
+                      <option value="deer">Deer</option>
+                      <option value="fox">Fox</option>
+                      <option value="red tail hawk">Red Tail Hawk</option>
+                      <option value="weasel">Weasel</option>
+                      <option value="wolf">Wolf</option>
+                    </select> -->
+
+<!-- <!DOCTYPE html>
+<html ng-app='roam'>
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+   <script src='js/app.js'></script>
+   <script type='text/javascript'></script>
+   <link rel='stylesheet' href='/css/styles.css'>
+  <title></title>
+</head>
+    <body>
+    <h1>HTML works</h1>
+    {{8 + 2}}
+    <ul ng-controller="SightingsListController as sightings"></ul>
+    
+    <div id="inputDiv"> input div</div>
+    
+      <div id="mapDiv"></div>
+      <script>
+      function initMap() {
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+          center: {lat: 44.540, lng: -78.546},
+          zoom: 8
+        });
+      }
+      </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+        async defer></script>
+    </body>
+</html>
+               <button ng-click="sightingsCtrl.delete(sighting, 
+
+       <button ng-click="sightingsCtrl.edit(sighting, $index)">Edit</button> -->
