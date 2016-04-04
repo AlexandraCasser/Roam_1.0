@@ -21,22 +21,42 @@ $(function() {
 
 }); // end window onload
 
-var addMarkers = function(map) {
 
+
+
+var addMarkers = function(map) {
 	//ajax call to get locations data from 'locations/json' route
 	$.ajax('/sightings')
 	 .done(function(result) {
 	 	// console.log('RESULT:', result);
 			// add location markers
+			console.log(result)
+			
+			var infoWindow = new google.maps.InfoWindow({
+  		});
 
 			for (var i=0; i < result.length; i++) {
 				marker = new google.maps.Marker ({
 				    map: map,
-				    icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
-				    position: { lat: result[i].lat, lng: result[i].lng }
+				    // icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
+				    position: { lat: result[i].lat, lng: result[i].lng },
 				    // title: result[i].species
+				    // if (result[i].species === "wolf") {
+				    // 	(result[i].icon: 'css/icons/silhouete.png')
+				    // }
+				    // else {
+				    // 	result[i].icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+				    // }
+				    info: result[i].species,
+				    infowindow: infoWindow
 				});
-				console.log(result[i].daytime)
+
+				google.maps.event.addListener( marker, 'click', function() {		
+   				infoWindow.setContent( this.info );
+   				infoWindow.open( map, this );		
+				});
+
+				// console.log(result[i].daytime)
 		  };
 		});
 } // end addMarkers
