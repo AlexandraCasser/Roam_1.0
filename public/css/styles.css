@@ -51,16 +51,12 @@ li {
 
 #line {
 	width: 90%;
-	/*font-size: 28px; */
-	/*line-height: 34px; */
 	font-style: italic; 
 	color: #000; 
 	margin: 0 auto;
 	text-align: center; 
 	border-top: none; 
 	border-bottom: dotted 1px rgba(92, 98, 101, .75); 
-	/*padding-top: 20px; */
-	/*padding-bottom: 50px;*/
 	margin-bottom: 32px;
 }
 
